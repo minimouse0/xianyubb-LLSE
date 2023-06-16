@@ -3,24 +3,24 @@
 
 const PLUGIN_NAME = "BetterFakePlayer";
 ll.registerPlugin(
-  /* name */ PLUGIN_NAME,
-  /* introduction */ "更好的假人",
-  /* version */ [0, 0, 1],
-  /* otherInformation */ {
-    author: "xianyubb",
-    other: "未经允许禁止私自分享修改后的插件",
-    qq: "2149656630",
-  }
+    /* name */ PLUGIN_NAME,
+    /* introduction */ "更好的假人",
+    /* version */[0, 0, 1],
+    /* otherInformation */ {
+        author: "xianyubb",
+        other: "未经允许禁止私自分享修改后的插件",
+        qq: "2149656630",
+    }
 );
 
 let Config = new JsonConfigFile(
-  `.\\plugins\\${PLUGIN_NAME}\\config.json`,
-  JSON.stringify({
-    MoneyType: "Score",
-    ScoreName: "money",
-    buy: true,
-    max_fakeplayer: 5,
-  })
+    `.\\plugins\\${PLUGIN_NAME}\\config.json`,
+    JSON.stringify({
+        MoneyType: "Score",
+        ScoreName: "money",
+        buy: true,
+        max_fakeplayer: 5,
+    })
 );
 
 let Data = new JsonConfigFile(`.\\plugins\\${PLUGIN_NAME}\\data.json`);
@@ -49,12 +49,12 @@ fakeplayer.mandatory("attacks", ParamType.Enum, "attack", 1);
 fakeplayer.optional("repeats", ParamType.Enum, "repeat", 1);
 fakeplayer.optional("interval", ParamType.Int);
 fakeplayer.overload([
-  "name",
-  "attacks",
-  "target",
-  "repeats",
-  "interval",
-  "times",
+    "name",
+    "attacks",
+    "target",
+    "repeats",
+    "interval",
+    "times",
 ]);
 //注册假人看向某个位置命令
 fakeplayer.setEnum("lookat", ["lookat"]);
@@ -75,38 +75,38 @@ fakeplayer.mandatory("rotint", ParamType.Int);
 fakeplayer.overload(["name", "rots", "rotint"]);
 //命令回调
 fakeplayer.setCallback((_cmd, _ori, out, res) => {
-  if (_ori.player && _ori.player.isOP()) {
-    if (cmd(res)) {
-      _ori.player.tell("假人正在执行中...");
-    } else {
-      _ori.player.tell(`未找到名为${res["name"]}的假人`);
-      _ori.player.tell(`正在为您生成名为${res["name"]}的假人`);
-      let sp = spawnSimilatedPlayer(
-        _ori.player,
-        res["name"],
-        _ori.player.blockPos
-      );
+    if (_ori.player && _ori.player.isOP()) {
+        if (cmd(res)) {
+            _ori.player.tell("假人正在执行中...");
+        } else {
+        _ori.player.tell(`未找到名为${res["name"]}的假人`);
+        _ori.player.tell(`正在为您生成名为${res["name"]}的假人`);
+        let sp = spawnSimilatedPlayer(
+            _ori.player,
+            res["name"],
+            _ori.player.blockPos
+        );
     }
     //当命令执行者是OP玩家时
-  } else if (_ori.player) {
-    if (cmd(res)) {
-      _ori.player.tell("假人正在执行中...");
+    } else if (_ori.player) {
+        if (cmd(res)) {
+            _ori.player.tell("假人正在执行中...");
+        } else {
+            _ori.player.tell(`未找到名为${res["name"]}的假人`);
+        }
+        //当命令执行者是普通玩家是
     } else {
-      _ori.player.tell(`未找到名为${res["name"]}的假人`);
-    }
-    //当命令执行者是普通玩家是
-  } else {
     if (cmd(res)) {
-      log("假人正在执行中...");
-    } else {
-      log(`未找到名为${res["name"]}的假人`);
-      log(`正在为您生成名为${res["name"]}的假人`);
-      let sp = mc.spawnSimulatedPlayer(res["name"], 0, 0, 0, 0);
-      log(`已在主世界0，0，0坐标生成创造假人`);
-      sp.setGameMode(1);
+            log("假人正在执行中...");
+        } else {
+            log(`未找到名为${res["name"]}的假人`);
+            log(`正在为您生成名为${res["name"]}的假人`);
+            let sp = mc.spawnSimulatedPlayer(res["name"], 0, 0, 0, 0);
+            log(`已在主世界0，0，0坐标生成创造假人`);
+            sp.setGameMode(1);
+        }
+        //当命令执行者非玩家时
     }
-    //当命令执行者非玩家时
-  }
 });
 //安装命令
 fakeplayer.setup();
@@ -118,9 +118,9 @@ fakeplayer.setup();
  * @param {IntPos} pos 整数坐标对象
  */
 let spawnSimilatedPlayer = (Player, name, pos) => {
-  Player.tell(`[BetterFakePlayer]成功为玩家${Player.name}生成了一个假人`);
+    Player.tell(`[BetterFakePlayer]成功为玩家${Player.name}生成了一个假人`);
 
-  return mc.spawnSimulatedPlayer(name, pos);
+    return mc.spawnSimulatedPlayer(name, pos);
 };
 
 /**
@@ -131,11 +131,11 @@ let spawnSimilatedPlayer = (Player, name, pos) => {
  * @param {number} interval 攻击间隔
  */
 let Attack = (SimulatedPlayer, target, Times = 1, interval = 200) => {
-  for (let i = 0; i < Times; i++) {
-    setInterval(async () => {
-      return SimulatedPlayer.simulateAttack(target);
-    }, interval);
-  }
+    for (let i = 0; i < Times; i++) {
+        setInterval(async () => {
+          return SimulatedPlayer.simulateAttack(target);
+        }, interval);
+    }
 };
 
 /**
@@ -144,7 +144,7 @@ let Attack = (SimulatedPlayer, target, Times = 1, interval = 200) => {
  * @param {IntPos} target 破坏对象
  */
 let Destory = (SimulatedPlayer, target) => {
-  return SimulatedPlayer.simulateDestroy(target);
+    return SimulatedPlayer.simulateDestroy(target);
 };
 
 /**
@@ -152,7 +152,7 @@ let Destory = (SimulatedPlayer, target) => {
  * @param {SimulatedPlayer} SimulatedPlayer 假人类型
  */
 let StopDestoringBlock = (SimulatedPlayer) => {
-  return SimulatedPlayer.simulateStopDestroyingBlock;
+    return SimulatedPlayer.simulateStopDestroyingBlock;
 };
 
 /**
@@ -161,9 +161,9 @@ let StopDestoringBlock = (SimulatedPlayer) => {
  * @param {number} Times 跳跃次数
  */
 let Jump = (SimulatedPlayer, Times = 1) => {
-  for (let i = 0; i < Times; i++) {
-    return SimulatedPlayer.simulateJump();
-  }
+    for (let i = 0; i < Times; i++) {
+        return SimulatedPlayer.simulateJump();
+    }
 };
 
 /**
@@ -172,7 +172,7 @@ let Jump = (SimulatedPlayer, Times = 1) => {
  * @param {IntPos|Entity} target 要看向的实体
  */
 let Lookat = (SimulatedPlayer, target) => {
-  return SimulatedPlayer.simulateLookAt(target);
+    return SimulatedPlayer.simulateLookAt(target);
 };
 
 /**
@@ -181,7 +181,7 @@ let Lookat = (SimulatedPlayer, target) => {
  * @param {number} rot 角度
  */
 let Bodyrot = (SimulatedPlayer, rot) => {
-  return SimulatedPlayer.simulateSetBodyRotation(rot);
+    return SimulatedPlayer.simulateSetBodyRotation(rot);
 };
 
 /**
@@ -190,7 +190,7 @@ let Bodyrot = (SimulatedPlayer, rot) => {
  * @param {IntPos} target 目标坐标
  */
 let LocalMove = (SimulatedPlayer, target) => {
-  return SimulatedPlayer.simulateLocalMove(target);
+    return SimulatedPlayer.simulateLocalMove(target);
 };
 
 /**
@@ -199,7 +199,7 @@ let LocalMove = (SimulatedPlayer, target) => {
  * @param {IntPos} target 目标坐标
  */
 let WorldMove = (SimulatedPlayer, target) => {
-  return SimulatedPlayer.simulateWorldMove(target);
+    return SimulatedPlayer.simulateWorldMove(target);
 };
 
 /**
@@ -207,7 +207,7 @@ let WorldMove = (SimulatedPlayer, target) => {
  * @param {SimulatedPlayer} SimulatedPlayer 假人类型
  */
 let StopMove = (SimulatedPlayer) => {
-  return SimulatedPlayer.simulateStopMoving();
+    return SimulatedPlayer.simulateStopMoving();
 };
 
 /**
@@ -215,28 +215,28 @@ let StopMove = (SimulatedPlayer) => {
  * @param {string} name 假人名
  */
 let isfakeplayer = (name) => {
-  for (let i = 0; i < mc.getOnlinePlayers().length; i++) {
-    const Player = mc.getOnlinePlayers()[i];
-    if (Player.isSimulatedPlayer() === true && Player.name === name) {
-      return Player;
-    } else if (Player.isSimulatedPlayer === false) {
-      return false;
+    for (let i = 0; i < mc.getOnlinePlayers().length; i++) {
+        const Player = mc.getOnlinePlayers()[i];
+        if (Player.isSimulatedPlayer() === true && Player.name === name) {
+            return Player;
+        } else if (Player.isSimulatedPlayer === false) {
+            return false;
+        }
     }
-  }
 };
 
 /**
  * 获取在线假人
  */
 let onlineFakePlayer = () => {
-  let PlayerArr = mc.getOnlinePlayers();
-  for (let i = 0; i < PlayerArr.length; i++) {
-    if (PlayerArr[i].isSimulatedPlayer() === true) {
-      let FakePlayer = [];
-      FakePlayer.push(PlayerArr[i]);
-      return FakePlayer;
+    let PlayerArr = mc.getOnlinePlayers();
+    for (let i = 0; i < PlayerArr.length; i++) {
+        if (PlayerArr[i].isSimulatedPlayer() === true) {
+            let FakePlayer = [];
+            FakePlayer.push(PlayerArr[i]);
+            return FakePlayer;
+        }
     }
-  }
 };
 
 /**
@@ -244,37 +244,37 @@ let onlineFakePlayer = () => {
  * @param {any} result 指令回调结果
  */
 function cmd(result) {
-  let FakePlayer = isfakeplayer(result.name);
-  let times = result["times"];
-  let pos = result["pos"];
+    let FakePlayer = isfakeplayer(result.name);
+    let times = result["times"];
+    let pos = result["pos"];
 
-  if (FakePlayer) {
-    if (result["jumps"]) {
-      if (times) {
-        return Jump(FakePlayer, times);
-      } else {
-        return Jump(FakePlayer);
-      }
-    } else if (result["attacks"]) {
-      if (times && result["interval"]) {
-        return Attack(FakePlayer, result["target"], times, result["interval"]);
-      } else if (result["interval"]) {
-        return Attack(FakePlayer, result["target"], 1, result["interval"]);
-      } else {
-        return Attack(FakePlayer, result["target"], 1, 0);
-      }
-    } else if (result["lookats"]) {
-      return Lookat(FakePlayer, pos);
-    } else if (result["destorys"]) {
-      return Destory(FakePlayer, pos);
-    } else if (result["stopdestorys"]) {
-      return StopDestoringBlock(FakePlayer);
-    } else if (result["rot"]) {
+    if (FakePlayer) {
+        if (result["jumps"]) {
+            if (times) {
+                return Jump(FakePlayer, times);
+            } else {
+                return Jump(FakePlayer);
+            }
+        } else if (result["attacks"]) {
+            if (times && result["interval"]) {
+                return Attack(FakePlayer, result["target"], times, result["interval"]);
+            } else if (result["interval"]) {
+                return Attack(FakePlayer, result["target"], 1, result["interval"]);
+            } else {
+                return Attack(FakePlayer, result["target"], 1, 0);
+            }
+        } else if (result["lookats"]) {
+            return Lookat(FakePlayer, pos);
+        } else if (result["destorys"]) {
+            return Destory(FakePlayer, pos);
+        } else if (result["stopdestorys"]) {
+            return StopDestoringBlock(FakePlayer);
+        } else if (result["rot"]) {
       return Bodyrot(FakePlayer, result["rotint"]);
+        }
+    } else {
+        return FakePlayer;
     }
-  } else {
-    return FakePlayer;
-  }
 }
 
 /* 表单模块 */
